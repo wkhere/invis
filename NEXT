@@ -1,0 +1,1 @@
+return err from IsTerm() instead of panic
