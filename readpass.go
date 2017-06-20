@@ -2,7 +2,7 @@ package readpass
 
 import (
 	"bufio"
-	"io"
+	"os"
 	"syscall"
 )
 
@@ -31,8 +31,8 @@ func IsTerm() bool {
 	return ws.ExitStatus() == 0
 }
 
-func NewReader(r io.Reader) *bufio.Reader {
-	return bufio.NewReader(r)
+func NewStdinReader() *bufio.Reader {
+	return bufio.NewReader(os.Stdin)
 }
 
 type ReadFunc func(*bufio.Reader) (string, error)
