@@ -9,14 +9,8 @@ import (
 const tty = "/usr/bin/tty"
 const stty = "/bin/stty"
 
-var attr = syscall.ProcAttr{
-	Files: []uintptr{0, 1, 2},
-}
-
-func panicIf(err error) {
-	if err != nil {
-		panic(err)
-	}
+type Reader struct {
+	*bufio.Reader
 }
 
 func IsTerm() bool {
@@ -31,17 +25,17 @@ func IsTerm() bool {
 	return ws.ExitStatus() == 0
 }
 
-func NewStdinReader() *bufio.Reader {
-	return bufio.NewReader(os.Stdin)
+func NewStdinReader() Reader {
+	return Reader{bufio.NewReader(os.Stdin)}
 }
 
-type ReadFunc func(*bufio.Reader) (string, error)
+type ReadFunc func(Reader) (string, error)
 
-func ReadLine(r *bufio.Reader) (string, error) {
+func ReadLine(r Reader) (string, error) {
 	return r.ReadString('\n')
 }
 
-func ReadPass(r *bufio.Reader) (line string, err error) {
+func ReadPass(r Reader) (line string, err error) {
 	var ws syscall.WaitStatus
 	var pid int
 
@@ -67,4 +61,14 @@ func ReadPass(r *bufio.Reader) (line string, err error) {
 
 	_, err = syscall.Wait4(pid, &ws, 0, nil)
 	return
+}
+
+var attr = syscall.ProcAttr{
+	Files: []uintptr{0, 1, 2},
+}
+
+func panicIf(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
