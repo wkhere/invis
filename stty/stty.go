@@ -4,8 +4,10 @@ import (
 	"syscall"
 )
 
-const tty = "/usr/bin/tty"
-const stty = "/bin/stty"
+const (
+	tty  = "/usr/bin/tty"
+	stty = "/bin/stty"
+)
 
 func IsTerm() bool {
 	var ws syscall.WaitStatus
