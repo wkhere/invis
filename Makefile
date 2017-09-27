@@ -1,4 +1,6 @@
 go:
-	go fmt 		./...
-	go test -cover	./...
-	go install 	./...
+	go fmt
+	go vet
+	go install
+
+.PHONY: go
