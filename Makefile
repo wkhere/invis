@@ -1,6 +1,6 @@
 go:
-	go fmt
-	go vet
-	go install
+	go fmt     ./...
+	go vet     ./...
+	go install ./...
 
 .PHONY: go
