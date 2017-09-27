@@ -1,3 +1,5 @@
 + simplify api - input should be always stdin
 + use own Reader type
+- change API so it returns []byte and strips newlines
+- build only on linux
 - return err from IsTerm() instead of panic
