@@ -9,7 +9,7 @@ const (
 	stty = "/bin/stty"
 )
 
-func IsTerm() bool {
+func IsTerminal() bool {
 	var ws syscall.WaitStatus
 
 	pid, err := syscall.ForkExec(tty, []string{"tty", "-s"}, &attr)
