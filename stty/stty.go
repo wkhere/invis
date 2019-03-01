@@ -11,38 +11,42 @@ const (
 	stty = "/bin/stty"
 )
 
-func IsTerminal() bool {
+func IsTerminal() (bool, error) {
 	var ws syscall.WaitStatus
 
 	pid, err := syscall.ForkExec(tty, []string{"tty", "-s"}, &attr)
-	panicIf(err)
+	if err != nil {
+		return false, err
+	}
 
 	_, err = syscall.Wait4(pid, &ws, 0, nil)
-	panicIf(err)
+	if err != nil {
+		return false, err
+	}
 
-	return ws.ExitStatus() == 0
+	return ws.ExitStatus() == 0, nil
 }
 
-func StartInvisible() (err error) {
+func StartInvisible() error {
 	var ws syscall.WaitStatus
 
 	pid, err := syscall.ForkExec(stty, []string{"stty", "-echo"}, &attr)
 	if err != nil {
-		return
+		return err
 	}
 	_, err = syscall.Wait4(pid, &ws, 0, nil)
-	return
+	return err
 }
 
-func StopInvisible() (err error) {
+func StopInvisible() error {
 	var ws syscall.WaitStatus
 
 	pid, err := syscall.ForkExec(stty, []string{"stty", "echo"}, &attr)
 	if err != nil {
-		return
+		return err
 	}
 	_, err = syscall.Wait4(pid, &ws, 0, nil)
-	return
+	return err
 }
 
 var attr = syscall.ProcAttr{
