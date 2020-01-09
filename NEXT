@@ -1,4 +1,3 @@
 + changed API & name
 + changed API again
 + return err from IsInputTTY() instead of panic
-- build only on linux
