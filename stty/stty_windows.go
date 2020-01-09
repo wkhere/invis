@@ -4,7 +4,7 @@ package stty
 
 import "errors"
 
-func IsTerminal() (bool, error) { return false, errNA }
+func IsInputTTY() (bool, error) { return false, errNA }
 
 func StartInvisible() (err error) {
 	return errNA

@@ -11,7 +11,7 @@ const (
 	stty = "/bin/stty"
 )
 
-func IsTerminal() (bool, error) {
+func IsInputTTY() (bool, error) {
 	var ws syscall.WaitStatus
 
 	pid, err := syscall.ForkExec(tty, []string{"tty", "-s"}, &attr)

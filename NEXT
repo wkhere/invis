@@ -1,3 +1,4 @@
 + changed API & name
-= return err from IsTerminal() instead of panic
++ changed API again
++ return err from IsInputTTY() instead of panic
 - build only on linux
