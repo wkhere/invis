@@ -52,9 +52,3 @@ func StopInvisible() error {
 var attr = syscall.ProcAttr{
 	Files: []uintptr{0, 1, 2},
 }
-
-func panicIf(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
